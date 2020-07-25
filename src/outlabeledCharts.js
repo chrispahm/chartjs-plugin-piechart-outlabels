@@ -1,5 +1,5 @@
 'use strict';
-
+import Chart from 'chart.js';
 import helpers from './helpers';
 import defaults from './defaults';
 
@@ -9,7 +9,7 @@ export default {
 		if (!Math.trunc) {
 			Math.trunc = function(v) {
 				v = +v;
-				return (v - v % 1)   ||   (!isFinite(v) || v === 0 ? v : v < 0 ? -0 : 0);
+				return (v - v % 1) || (!isFinite(v) || v === 0 ? v : v < 0 ? -0 : 0);
 			};
 		}
 
@@ -28,7 +28,7 @@ export default {
 			Chart.helpers.each(meta.data, function(arc, index) {
 				me.updateElement(arc, index, reset);
 			});
-		}
+		};
 
 		var customDoughnut = Chart.controllers.doughnut.extend({
 			update: customUpdate
@@ -41,4 +41,4 @@ export default {
 		Chart.controllers.outlabeledPie = customPie;
 		Chart.controllers.outlabeledDoughnut = customDoughnut;
 	}
-}
+};
