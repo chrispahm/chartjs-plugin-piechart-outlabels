@@ -6,6 +6,7 @@
   "license": "MIT",
   "main": "dist/chartjs-plugin-piechart-outlabels.min.js",
   "module": "dist/chartjs-plugin-piechart-outlabels.esm.js",
+  "observable": "dist/chartjs-plugin-piechart-outlabels.obs.js",
   "browser": "dist/chartjs-plugin-piechart-outlabels.min.js",
   "repository": {
     "type": "git",

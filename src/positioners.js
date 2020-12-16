@@ -1,7 +1,7 @@
 'use strict';
 
 export default {
-	center: function(arc, stretch) {
+	center: function(arc, stretch, offset = 0) {
 		var angle = (arc.startAngle + arc.endAngle) / 2;
 		var cosA = Math.cos(angle);
 		var sinA = Math.sin(angle);
@@ -14,8 +14,8 @@ export default {
 			d: stretchedD,
 			arc: arc,
 			anchor: {
-				x: arc.x + cosA * d,
-				y: arc.y + sinA * d,
+				x: arc.x + cosA * (d + offset),
+				y: arc.y + sinA * (d + offset),
 			},
 			copy: {
 				x: arc.x + cosA * stretchedD,

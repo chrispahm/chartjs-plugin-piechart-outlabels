@@ -27,9 +27,9 @@ export default {
 			var prec = val.replace(/%v\./gi, '');
 			if (prec.length) {
 				return +prec;
-			} else {
-				return config.valuePrecision || defaults.valuePrecision;
 			}
+			return config.valuePrecision || defaults.valuePrecision;
+
 		}).forEach(function(val) {
 			text = text.replace(/%v\.?(\d*)/i, value.toFixed(val));
 		});
@@ -39,9 +39,9 @@ export default {
 			var prec = val.replace(/%p\./gi, '');
 			if (prec.length) {
 				return +prec;
-			} else  {
-				return config.percentPrecision || defaults.percentPrecision;
 			}
+			return config.percentPrecision || defaults.percentPrecision;
+
 		}).forEach(function(val) {
 			text = text.replace(/%p\.?(\d*)/i, (context.percent * 100).toFixed(val) + '%');
 		});
@@ -84,6 +84,7 @@ export default {
 			};
 
 			this.stretch = resolve([config.stretch, 40], context, index);
+			this.offsetLine = resolve([config.offsetLine, 0], context, index);
 			this.size = helpers.textSize(ctx, this.lines, this.style.font);
 
 			this.offsetStep = this.size.width / 20;
@@ -190,12 +191,17 @@ export default {
 				x += this.textRect.width;
 			}
 
-			this.ctx.font = this.style.font.string;
 			this.ctx.fillStyle = color;
 			this.ctx.textAlign = align;
 			this.ctx.textBaseline = 'middle';
 
 			for (idx = 0; idx < ilen; ++idx) {
+				if (this.lines.length > 1 && idx === 0) {
+					this.ctx.font = this.style.font.titleString;
+				} else {
+					this.ctx.font = this.style.font.string;
+				}
+
 				this.ctx.fillText(
 					this.lines[idx],
 					Math.round(x),
@@ -205,6 +211,7 @@ export default {
 
 				y += lh;
 			}
+
 		};
 
 		// Draw label box
@@ -255,7 +262,7 @@ export default {
 
 
 		this.update = function(view, elements, max) {
-			this.center = positioners.center(view, this.stretch);
+			this.center = positioners.center(view, this.stretch, this.offsetLine);
 			this.moveLabelToOffset();
 
 			this.center.x += this.offset.x;
@@ -284,7 +291,7 @@ export default {
 							break;
 						}
 
-						if(this.containsPoint(elPoints[p])) {
+						if (this.containsPoint(elPoints[p])) {
 							valid = false;
 							break;
 						}

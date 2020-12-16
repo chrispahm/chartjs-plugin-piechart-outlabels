@@ -43,13 +43,14 @@ export default helpers.merge(helpers, {
 
 	// @todo move this method in Chart.helpers.options.toFont
 	parseFont: function(value, height) {
-		
+
 		var global = Chart.defaults.global;
 		var size = helpers.valueOrDefault(value.size, global.defaultFontSize);
+		var titleSize = helpers.valueOrDefault(value.titleSize, global.defaultFontSize);
 
-		
 		if (value.resizable) {
 			size = this.adaptTextSizeToHeight(height, value.minSize, value.maxSize);
+			titleSize = this.adaptTextSizeToHeight(height, value.minSize, value.maxSize);
 		}
 
 		var font = {
@@ -61,16 +62,27 @@ export default helpers.merge(helpers, {
 			string: ''
 		};
 
+		var title = {
+			family: helpers.valueOrDefault(value.titleFamily, global.defaultFontFamily),
+			lineHeight: helpers.options.toLineHeight(value.lineHeight, size),
+			size: titleSize,
+			style: helpers.valueOrDefault(value.titleStyle, global.defaultFontStyle),
+			weight: helpers.valueOrDefault(value.titleWeight, null),
+			string: ''
+		};
+
 		font.string = helpers.toFontString(font);
+		font.titleString = helpers.toFontString(title);
+
 		return font;
 	},
 
 	adaptTextSizeToHeight: function(height, min, max) {
 		var size = (height / 100) * 2.5;
-		if(min && size < min) {
+		if (min && size < min) {
 			return min;
 		}
-		if(max && size > max) {
+		if (max && size > max) {
 			return max;
 		}
 		return size;

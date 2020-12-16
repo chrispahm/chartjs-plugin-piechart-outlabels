@@ -54,5 +54,18 @@ export default [
 				},
 			}
 		]
+	},
+	{
+		input: 'src/plugin.js',
+		output: [
+			{
+				file: pkg.observable,
+				banner,
+				format: 'es',
+				globals: {
+					'chart.js': 'Chart'
+				},
+			}
+		]
 	}
 ];

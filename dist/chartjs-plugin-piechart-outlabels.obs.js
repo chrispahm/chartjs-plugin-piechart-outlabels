@@ -7,7 +7,6 @@
  * Released under the MIT license
  * https://github.com/Neckster/chartjs-plugin-piechart-outlabels/blob/master/LICENSE
  */
-import Chart from 'chart.js';
 
 var helpers = Chart.helpers;
 
